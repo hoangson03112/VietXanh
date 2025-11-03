@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300..800&display=swap"); */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(64, 145, 108, 0.6);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(64, 145, 108, 1);
+}

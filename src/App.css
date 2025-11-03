@@ -1,0 +1,12 @@
+*, *::before, *::after {
+  scroll-behavior: auto !important;
+}
+
+html, body {
+  scroll-behavior: auto !important;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-padding-top: 0 !important;
+}
