@@ -26,6 +26,7 @@ export default function Product() {
   const [error, setError] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+console.log(relatedProducts);
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -58,6 +59,8 @@ export default function Product() {
           );
 
           const shuffled = otherProducts.sort(() => Math.random() - 0.5);
+          console.log(shuffled);
+          
           setRelatedProducts(shuffled.slice(0, 4));
         }
       } catch (err) {
