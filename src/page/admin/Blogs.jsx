@@ -378,7 +378,7 @@ export default function AdminBlogs() {
               {/* Add Button */}
               <button
                 onClick={handleCreate}
-                className="flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-full text-white font-bold transition-all hover:scale-105 hover:shadow-xl"
+                className="flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-base rounded-full text-white font-bold transition-all hover:scale-105 hover:shadow-xl cursor-pointer"
                 style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
               >
                 <Plus size={18} />
@@ -450,7 +450,7 @@ export default function AdminBlogs() {
                   <div className="flex gap-2 pt-2 md:pt-3 border-t border-gray-100">
                     <button
                       onClick={() => handleToggleStatus(blog)}
-                      className={`flex-1 flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-2 text-xs md:text-sm rounded-full font-bold text-white transition-all hover:scale-105 ${
+                      className={`flex-1 flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-2 text-xs md:text-sm rounded-full font-bold text-white transition-all hover:scale-105 cursor-pointer ${
                         blog.isActive ? "bg-orange-500" : "bg-green-500"
                       }`}
                       title={
@@ -468,7 +468,7 @@ export default function AdminBlogs() {
                     </button>
                     <button
                       onClick={() => handleEdit(blog)}
-                      className="flex-1 flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-2 text-xs md:text-sm rounded-full font-bold text-white transition-all hover:scale-105"
+                      className="flex-1 flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-2 text-xs md:text-sm rounded-full font-bold text-white transition-all hover:scale-105 cursor-pointer"
                       style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
                     >
                       <Edit2 size={14} className="md:w-4 md:h-4" />
@@ -476,7 +476,7 @@ export default function AdminBlogs() {
                     </button>
                     <button
                       onClick={() => handleDelete(blog._id)}
-                      className="flex-1 flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-2 text-xs md:text-sm rounded-full font-bold text-white transition-all hover:scale-105"
+                      className="flex-1 flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-2 text-xs md:text-sm rounded-full font-bold text-white transition-all hover:scale-105 cursor-pointer"
                       style={{ backgroundColor: "#F44336" }}
                     >
                       <Trash2 size={14} className="md:w-4 md:h-4" />

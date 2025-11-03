@@ -10,6 +10,7 @@ import Login from "./page/Login";
 import Register from "./page/Register";
 import Home from "./page/Home";
 import { AuthProvider } from "./context/AuthContext";
+import { AdminRoute } from "./components/ProtectedRoute";
 import "./App.css";
 import Products from "./page/Products";
 import Blogs from "./page/Blogs";
@@ -37,7 +38,25 @@ function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="/admin" element={<AdminDashboard />} />
+          {/* Protected Admin Routes */}
+          <Route 
+            path="/admin" 
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            } 
+          />
+          <Route 
+            path="/admin/products" 
+            element={
+              <AdminRoute>
+                <AdminProducts />
+              </AdminRoute>
+            } 
+          />
+          
+          {/* Public Routes */}
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/blogs" element={<Blogs />} />

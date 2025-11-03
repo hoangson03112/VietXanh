@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowRight, Check, Facebook, Instagram, Twitter } from "lucide-react";
 import { motion, useInView } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import HowToOrder from "../components/HowToOrder";
 import Footer from "../components/Footer";
@@ -9,6 +10,7 @@ import { ScrollReveal } from "../util/conmom";
 import { getFeaturedProducts } from "../services/productService";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
 
@@ -30,36 +32,10 @@ export default function Home() {
     loadFeatured();
   }, []);
 
-  // Fallback products nếu không có featured
-  const fallbackProducts = [
-    {
-      name: "Túi cuộn rút",
-      description:
-        "Túi cuộn một đầu gọn nhẹ, dễ dàng mở và bảo quản đồ tiện lợi.",
-      images: ["./product1.png"],
-    },
-    {
-      name: "Túi 2 quai (T-Shirt)",
-      description:
-        "Túi hai quai chắc chắn, tiện lợi và phù hợp cho nhiều mục đích sử dụng.",
-      images: ["./product1.png"],
-    },
-    {
-      name: "Cốc",
-      description:
-        "Cốc nhựa sinh học bền nhẹ, an toàn cho sức khoẻ, dễ dàng tái sử dụng.",
-      images: ["./product1.png"],
-    },
-    {
-      name: "Ống hút",
-      description:
-        "Ống hút sinh học bền, không thấm nước, dùng an toàn cho đồ uống.",
-      images: ["./product1.png"],
-    },
-  ];
-
-  const displayProducts =
-    featuredProducts.length > 0 ? featuredProducts : fallbackProducts;
+  // Navigate to product detail
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -138,29 +114,37 @@ export default function Home() {
                   <div className="col-span-full text-center py-8">
                     <p className="text-gray-500">Đang tải sản phẩm...</p>
                   </div>
+                ) : featuredProducts.length === 0 ? (
+                  <div className="col-span-full text-center py-8">
+                    <p className="text-gray-500">Chưa có sản phẩm nổi bật nào</p>
+                    <p className="text-sm text-gray-400 mt-2">Admin vui lòng đánh dấu sản phẩm nổi bật</p>
+                  </div>
                 ) : (
-                  displayProducts.map((p, i) => (
-                    <ScrollReveal key={i} delay={i * 0.1}>
-                      <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-2">
-                        <div className="aspect-[295/210]">
+                  featuredProducts.map((p, i) => (
+                    <ScrollReveal key={p._id || i} delay={i * 0.1}>
+                      <div 
+                        onClick={() => handleProductClick(p._id)}
+                        className="rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group"
+                      >
+                        <div className="aspect-[295/210] overflow-hidden">
                           <img
                             src={p.images?.[0] || "./product1.png"}
                             alt={p.name}
-                            className="w-full h-full object-fill"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />
                         </div>
                         <div
                           className="p-6"
                           style={{ backgroundColor: "#4B9D7E" }}
                         >
-                          <h3 className="text-white font-bold text-xl mb-2">
+                          <h3 className="text-white font-bold text-xl mb-2 line-clamp-1">
                             {p.name}
                           </h3>
-                          <p className="text-white text-sm opacity-90 mb-4 h-10">
+                          <p className="text-white text-sm opacity-90 mb-4 h-10 line-clamp-2">
                             {p.description}
                           </p>
-                          <button className="text-white font-bold text-xl flex items-center gap-2 cursor-pointer">
-                            Xem thêm <ArrowRight size={16} />
+                          <button className="text-white font-bold text-lg flex items-center gap-2 hover:gap-4 transition-all duration-300 cursor-pointer">
+                            Xem thêm <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                           </button>
                         </div>
                       </div>

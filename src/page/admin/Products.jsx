@@ -210,13 +210,19 @@ export default function AdminProducts() {
     const action = currentStatus ? "ẩn" : "hiển thị";
     const actionPast = currentStatus ? "ẩn" : "hiển thị";
     
+    // Tìm sản phẩm để kiểm tra trạng thái featured
+    const product = products.find(p => p._id === id);
+    const willLoseFeatured = currentStatus && product?.isFeatured;
+    
     setConfirmModal({
       isOpen: true,
       type: currentStatus ? "warning" : "info",
       icon: currentStatus ? "hide" : "show",
       title: currentStatus ? "Ẩn sản phẩm" : "Hiển thị sản phẩm",
       message: currentStatus 
-        ? "Sản phẩm sẽ bị ẩn khỏi trang chủ và không hiển thị cho khách hàng. Bạn có muốn tiếp tục?"
+        ? (willLoseFeatured 
+            ? "⚠️ Sản phẩm này đang được đánh dấu NỔI BẬT trên trang chủ.\n\nKhi ẨN sản phẩm, nó sẽ tự động bị BỎ khỏi danh sách nổi bật và không hiển thị cho khách hàng.\n\nBạn có chắc chắn muốn tiếp tục?"
+            : "Sản phẩm sẽ bị ẩn khỏi trang chủ và không hiển thị cho khách hàng. Bạn có muốn tiếp tục?")
         : "Sản phẩm sẽ được hiển thị trở lại trên trang chủ cho khách hàng. Bạn có muốn tiếp tục?",
       onConfirm: async () => {
         setLoading(true);
@@ -225,7 +231,14 @@ export default function AdminProducts() {
           
           if (response.success) {
             console.log('✅ Product status toggled:', response.data.isActive);
-            showToast(`Đã ${actionPast} sản phẩm thành công!`, "success");
+            
+            // Hiển thị thông báo đặc biệt nếu sản phẩm bị mất featured
+            if (willLoseFeatured) {
+              showToast(`Đã ${actionPast} sản phẩm và bỏ khỏi danh sách nổi bật!`, "warning");
+            } else {
+              showToast(`Đã ${actionPast} sản phẩm thành công!`, "success");
+            }
+            
             loadProducts();
           }
         } catch (error) {
@@ -242,6 +255,15 @@ export default function AdminProducts() {
   const handleToggleFeatured = async (id, currentFeatured) => {
     const action = currentFeatured ? "bỏ nổi bật" : "đánh dấu nổi bật";
     
+    // Tìm sản phẩm để kiểm tra trạng thái active
+    const product = products.find(p => p._id === id);
+    
+    // Nếu sản phẩm đang ẨN, không cho phép đánh dấu featured
+    if (!currentFeatured && !product?.isActive) {
+      showToast("⚠️ Không thể đánh dấu nổi bật sản phẩm đang ẨN. Vui lòng HIỂN THỊ sản phẩm trước!", "error");
+      return;
+    }
+    
     setConfirmModal({
       isOpen: true,
       type: currentFeatured ? "warning" : "success",
@@ -249,7 +271,7 @@ export default function AdminProducts() {
       title: currentFeatured ? "Bỏ sản phẩm nổi bật" : "Đánh dấu nổi bật",
       message: currentFeatured 
         ? "Sản phẩm sẽ không còn hiển thị ở mục sản phẩm nổi bật trên trang chủ."
-        : "Sản phẩm sẽ được hiển thị ở mục nổi bật trên trang chủ (tối đa 4 sản phẩm).",
+        : "✨ Sản phẩm sẽ được hiển thị ở mục nổi bật trên trang chủ (tối đa 4 sản phẩm).\n\nLưu ý: Chỉ sản phẩm đang HIỂN THỊ mới có thể được đánh dấu nổi bật.",
       onConfirm: async () => {
         setLoading(true);
         try {
@@ -263,7 +285,15 @@ export default function AdminProducts() {
         } catch (error) {
           console.error("❌ Error toggling featured:", error);
           const errorMsg = error.response?.data?.message || "Không thể thay đổi trạng thái nổi bật";
-          showToast(errorMsg, "error");
+          
+          // Hiển thị thông báo lỗi user-friendly
+          if (errorMsg.includes("inactive")) {
+            showToast("⚠️ Không thể đánh dấu nổi bật sản phẩm đang ẨN!", "error");
+          } else if (errorMsg.includes("Maximum 4")) {
+            showToast("⚠️ Đã đủ 4 sản phẩm nổi bật! Vui lòng bỏ đánh dấu sản phẩm khác trước.", "error");
+          } else {
+            showToast(errorMsg, "error");
+          }
         } finally {
           setLoading(false);
         }
@@ -489,7 +519,7 @@ export default function AdminProducts() {
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleToggleStatus(product._id, product.isActive)}
-                          className="p-2 rounded-lg hover:scale-110 transition-transform"
+                          className="p-2 rounded-lg hover:scale-110 transition-transform cursor-pointer"
                           style={{ 
                             backgroundColor: product.isActive 
                               ? "rgba(64, 145, 108, 0.1)" 
@@ -505,23 +535,43 @@ export default function AdminProducts() {
                         </button>
                         <button
                           onClick={() => handleToggleFeatured(product._id, product.isFeatured)}
-                          className="p-2 rounded-lg hover:scale-110 transition-transform"
+                          disabled={!product.isActive && !product.isFeatured}
+                          className="p-2 rounded-lg transition-transform relative group"
                           style={{ 
                             backgroundColor: product.isFeatured 
                               ? "rgba(255, 193, 7, 0.2)" 
-                              : "rgba(158, 158, 158, 0.1)" 
+                              : !product.isActive 
+                                ? "rgba(200, 200, 200, 0.1)"
+                                : "rgba(158, 158, 158, 0.1)",
+                            cursor: (!product.isActive && !product.isFeatured) ? "not-allowed" : "pointer",
+                            opacity: (!product.isActive && !product.isFeatured) ? 0.5 : 1
                           }}
-                          title={product.isFeatured ? "Bỏ nổi bật" : "Đánh dấu nổi bật"}
+                          title={
+                            !product.isActive && !product.isFeatured
+                              ? "Vui lòng HIỂN THỊ sản phẩm trước khi đánh dấu nổi bật"
+                              : product.isFeatured 
+                                ? "Bỏ nổi bật" 
+                                : "Đánh dấu nổi bật"
+                          }
                         >
                           <Star 
                             size={18} 
                             fill={product.isFeatured ? "rgba(255, 193, 7, 1)" : "none"}
-                            style={{ color: product.isFeatured ? "rgba(255, 193, 7, 1)" : "rgba(158, 158, 158, 1)" }} 
+                            style={{ 
+                              color: product.isFeatured 
+                                ? "rgba(255, 193, 7, 1)" 
+                                : !product.isActive 
+                                  ? "rgba(180, 180, 180, 1)"
+                                  : "rgba(158, 158, 158, 1)" 
+                            }} 
                           />
+                          {!product.isActive && !product.isFeatured && (
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></div>
+                          )}
                         </button>
                         <button
                           onClick={() => handleEdit(product)}
-                          className="p-2 rounded-lg hover:scale-110 transition-transform"
+                          className="p-2 rounded-lg hover:scale-110 transition-transform cursor-pointer"
                           style={{ backgroundColor: "rgba(64, 145, 108, 0.1)" }}
                         >
                           <Edit2
@@ -531,7 +581,7 @@ export default function AdminProducts() {
                         </button>
                         <button
                           onClick={() => handleDelete(product._id)}
-                          className="p-2 rounded-lg hover:scale-110 transition-transform"
+                          className="p-2 rounded-lg hover:scale-110 transition-transform cursor-pointer"
                           style={{ backgroundColor: "rgba(244, 67, 54, 0.1)" }}
                         >
                           <Trash2 size={18} style={{ color: "#F44336" }} />
@@ -612,7 +662,7 @@ export default function AdminProducts() {
                 <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
                   <button
                     onClick={() => handleToggleStatus(product._id, product.isActive)}
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-bold text-white transition-all hover:scale-105"
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-bold text-white transition-all hover:scale-105 cursor-pointer"
                     style={{ 
                       backgroundColor: product.isActive 
                         ? "rgba(64, 145, 108, 1)" 
@@ -633,23 +683,40 @@ export default function AdminProducts() {
                   </button>
                   <button
                     onClick={() => handleToggleFeatured(product._id, product.isFeatured)}
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-bold transition-all hover:scale-105"
+                    disabled={!product.isActive && !product.isFeatured}
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-bold transition-all relative"
                     style={{ 
                       backgroundColor: product.isFeatured 
                         ? "rgba(255, 193, 7, 1)" 
-                        : "rgba(158, 158, 158, 0.3)",
-                      color: product.isFeatured ? "white" : "rgba(97, 97, 97, 1)"
+                        : !product.isActive
+                          ? "rgba(200, 200, 200, 0.3)"
+                          : "rgba(158, 158, 158, 0.3)",
+                      color: product.isFeatured 
+                        ? "white" 
+                        : !product.isActive
+                          ? "rgba(150, 150, 150, 1)"
+                          : "rgba(97, 97, 97, 1)",
+                      cursor: (!product.isActive && !product.isFeatured) ? "not-allowed" : "pointer",
+                      opacity: (!product.isActive && !product.isFeatured) ? 0.5 : 1
                     }}
+                    title={
+                      !product.isActive && !product.isFeatured
+                        ? "Vui lòng HIỂN THỊ sản phẩm trước"
+                        : undefined
+                    }
                   >
                     <Star 
                       size={16} 
                       fill={product.isFeatured ? "white" : "none"}
                     />
                     {product.isFeatured ? "Nổi bật" : "Đánh dấu"}
+                    {!product.isActive && !product.isFeatured && (
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></div>
+                    )}
                   </button>
                   <button
                     onClick={() => handleEdit(product)}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full font-bold text-white transition-all hover:scale-105"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full font-bold text-white transition-all hover:scale-105 cursor-pointer"
                     style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
                   >
                     <Edit2 size={16} />
@@ -657,7 +724,7 @@ export default function AdminProducts() {
                   </button>
                   <button
                     onClick={() => handleDelete(product._id)}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full font-bold text-white transition-all hover:scale-105"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full font-bold text-white transition-all hover:scale-105 cursor-pointer"
                     style={{ backgroundColor: "#F44336" }}
                   >
                     <Trash2 size={16} />
@@ -705,7 +772,7 @@ export default function AdminProducts() {
                       setCurrentPage((prev) => Math.max(1, prev - 1))
                     }
                     disabled={currentPage === 1}
-                    className="p-2 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110"
+                    className="p-2 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 cursor-pointer"
                     style={{ backgroundColor: "rgba(64, 145, 108, 0.1)" }}
                   >
                     <ChevronLeft
@@ -727,7 +794,7 @@ export default function AdminProducts() {
                       setCurrentPage((prev) => Math.min(totalPages, prev + 1))
                     }
                     disabled={currentPage === totalPages}
-                    className="p-2 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110"
+                    className="p-2 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 cursor-pointer"
                     style={{ backgroundColor: "rgba(64, 145, 108, 0.1)" }}
                   >
                     <ChevronRight
@@ -781,7 +848,7 @@ export default function AdminProducts() {
               </div>
               <button
                 onClick={() => setShowModal(false)}
-                className="p-2.5 hover:bg-white/20 rounded-xl transition-all hover:rotate-90 duration-300"
+                className="p-2.5 hover:bg-white/20 rounded-xl transition-all hover:rotate-90 duration-300 cursor-pointer"
               >
                 <X size={24} className="text-white" />
               </button>
@@ -942,7 +1009,7 @@ export default function AdminProducts() {
                         setImageFiles([]);
                         setImagePreview([]);
                       }}
-                      className="text-xs font-bold px-3 py-1.5 rounded-full transition-all hover:scale-105"
+                      className="text-xs font-bold px-3 py-1.5 rounded-full transition-all hover:scale-105 cursor-pointer"
                       style={{ 
                         color: "#F44336",
                         backgroundColor: "rgba(244, 67, 54, 0.1)"
@@ -984,7 +1051,7 @@ export default function AdminProducts() {
                             e.stopPropagation();
                             handleRemoveImage(index);
                           }}
-                          className="absolute bottom-2 right-2 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:scale-110 shadow-lg"
+                          className="absolute bottom-2 right-2 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:scale-110 shadow-lg cursor-pointer"
                           style={{ backgroundColor: "#F44336" }}
                         >
                           <X size={16} className="text-white" />
@@ -996,7 +1063,7 @@ export default function AdminProducts() {
                     <button
                       type="button"
                       onClick={() => document.getElementById('fileInput').click()}
-                      className="w-full aspect-square rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-2 transition-all hover:border-[rgba(64,145,108,1)] hover:bg-white"
+                      className="w-full aspect-square rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-2 transition-all hover:border-[rgba(64,145,108,1)] hover:bg-white cursor-pointer"
                       style={{ 
                         borderColor: "rgba(64, 145, 108, 0.3)",
                         backgroundColor: "rgba(255, 255, 255, 0.5)"
@@ -1016,7 +1083,7 @@ export default function AdminProducts() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 px-6 py-4 rounded-2xl border-2 font-bold transition-all hover:scale-[1.02] hover:shadow-lg"
+                  className="flex-1 px-6 py-4 rounded-2xl border-2 font-bold transition-all hover:scale-[1.02] hover:shadow-lg cursor-pointer"
                   style={{
                     borderColor: "rgba(64, 145, 108, 1)",
                     color: "rgba(64, 145, 108, 1)",
@@ -1029,7 +1096,7 @@ export default function AdminProducts() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold text-white transition-all hover:scale-[1.02] hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold text-white transition-all hover:scale-[1.02] hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   style={{ 
                     background: loading ? "rgba(64, 145, 108, 0.5)" : "linear-gradient(135deg, rgba(64, 145, 108, 1) 0%, rgba(49, 87, 44, 1) 100%)"
                   }}

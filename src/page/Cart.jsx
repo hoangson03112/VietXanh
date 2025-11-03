@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { motion } from "framer-motion";
@@ -18,6 +18,7 @@ import { submitContactForm } from "../services/contactService";
 
 export default function Cart() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [formData, setFormData] = useState({
@@ -32,6 +33,11 @@ export default function Cart() {
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Navigate to product detail
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
 
   // Load cart from localStorage khi component mount
   useEffect(() => {
@@ -436,21 +442,27 @@ export default function Cart() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 * index }}
-                  className="bg-white rounded-2xl p-4 md:p-6 shadow-lg flex items-center gap-4 md:gap-6"
+                  className="bg-white rounded-2xl p-4 md:p-6 shadow-lg flex items-center gap-4 md:gap-6 group"
                 >
-                  {/* Product Image */}
-                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden shrink-0 bg-gray-100">
+                  {/* Product Image - Clickable */}
+                  <div 
+                    onClick={() => handleProductClick(item._id)}
+                    className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden shrink-0 bg-gray-100 cursor-pointer transition-transform duration-300 hover:scale-105"
+                  >
                     <img
                       src={item.image || "/product1.png"}
                       alt={item.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
 
-                  {/* Product Info */}
-                  <div className="flex-1">
+                  {/* Product Info - Clickable */}
+                  <div 
+                    onClick={() => handleProductClick(item._id)}
+                    className="flex-1 cursor-pointer"
+                  >
                     <h3
-                      className="text-base md:text-lg font-bold mb-2"
+                      className="text-base md:text-lg font-bold mb-2 hover:underline transition-all"
                       style={{ color: "rgba(49, 87, 44, 1)" }}
                     >
                       {item.name}
@@ -464,7 +476,7 @@ export default function Cart() {
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => handleQuantityChange(item._id, -1)}
-                      className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:opacity-80"
+                      className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:opacity-80 cursor-pointer"
                       style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
                     >
                       <Minus size={18} />
@@ -477,7 +489,7 @@ export default function Cart() {
                     </span>
                     <button
                       onClick={() => handleQuantityChange(item._id, 1)}
-                      className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:opacity-80"
+                      className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:opacity-80 cursor-pointer"
                       style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
                     >
                       <Plus size={18} />
@@ -497,7 +509,7 @@ export default function Cart() {
                   {/* Delete Button */}
                   <button
                     onClick={() => handleRemoveItem(item._id)}
-                    className="p-2 text-gray-400 hover:text-red-500 transition-colors duration-300"
+                    className="p-2 text-gray-400 hover:text-red-500 transition-colors duration-300 cursor-pointer"
                   >
                     <Trash2 size={20} />
                   </button>

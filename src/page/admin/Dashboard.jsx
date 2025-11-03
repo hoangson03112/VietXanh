@@ -71,7 +71,7 @@ export default function AdminDashboard() {
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden text-white hover:bg-white/10 p-2 rounded-lg"
+              className="lg:hidden text-white hover:bg-white/10 p-2 rounded-lg cursor-pointer"
             >
               <X size={24} />
             </button>
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
                   setActiveTab(item.id);
                   if (window.innerWidth < 1024) setSidebarOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer ${
                   isActive
                     ? "bg-white text-[rgba(49,87,44,1)] shadow-lg scale-105"
                     : "text-white hover:bg-white/10"
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
           {/* Back to Home Button */}
           <button
             onClick={() => navigate("/home")}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-white hover:bg-white/10 border-t border-white/10 mt-4 pt-4"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-white hover:bg-white/10 border-t border-white/10 mt-4 pt-4 cursor-pointer"
           >
             <Home size={22} />
             <span className="font-semibold text-base">Về Trang Chủ</span>
@@ -142,7 +142,7 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
                 style={{ color: "rgba(49, 87, 44, 1)" }}
               >
                 <Menu size={24} />

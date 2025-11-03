@@ -225,7 +225,7 @@ export default function AdminContact() {
                                 e.stopPropagation();
                                 handleViewMessage(message);
                               }}
-                              className="p-2 rounded-lg hover:bg-gray-200 transition-colors"
+                              className="p-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer"
                             >
                               <Eye
                                 size={20}
@@ -276,7 +276,7 @@ export default function AdminContact() {
                               setCurrentPage((prev) => Math.max(1, prev - 1))
                             }
                             disabled={currentPage === 1}
-                            className="p-2 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110"
+                            className="p-2 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 cursor-pointer"
                             style={{
                               backgroundColor: "rgba(64, 145, 108, 0.1)",
                             }}
@@ -302,7 +302,7 @@ export default function AdminContact() {
                               )
                             }
                             disabled={currentPage === totalPages}
-                            className="p-2 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110"
+                            className="p-2 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 cursor-pointer"
                             style={{
                               backgroundColor: "rgba(64, 145, 108, 0.1)",
                             }}
@@ -339,7 +339,7 @@ export default function AdminContact() {
                   </h3>
                   <button
                     onClick={() => setSelectedMessage(null)}
-                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors lg:hidden"
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors lg:hidden cursor-pointer"
                   >
                     <XIcon size={20} style={{ color: "rgba(49, 87, 44, 1)" }} />
                   </button>

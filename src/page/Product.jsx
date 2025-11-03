@@ -312,7 +312,7 @@ export default function Product() {
                     <div className="flex items-center gap-4">
                       <button
                         onClick={handleDecrease}
-                        className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white hover:opacity-90 transition-opacity"
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white hover:opacity-90 transition-opacity cursor-pointer"
                         style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
                       >
                         <Minus size={20} className="text-white" />
@@ -325,7 +325,7 @@ export default function Product() {
                       </span>
                       <button
                         onClick={handleIncrease}
-                        className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white hover:opacity-90 transition-opacity"
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white hover:opacity-90 transition-opacity cursor-pointer"
                         style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
                       >
                         <Plus size={20} className="text-white" />
@@ -340,14 +340,14 @@ export default function Product() {
                   >
                     <button
                       onClick={handleBuyNow}
-                      className="px-6 py-4 rounded-lg text-white font-bold text-base hover:opacity-90 transition-opacity"
+                      className="px-6 py-4 rounded-lg text-white font-bold text-base hover:opacity-90 transition-opacity cursor-pointer"
                       style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
                     >
                       Mua ngay
                     </button>
                     <button
                       onClick={handleAddToCart}
-                      className="bg-amber-50 px-6 py-4 rounded-lg font-bold text-base hover:bg-amber-100 border-2"
+                      className="bg-amber-50 px-6 py-4 rounded-lg font-bold text-base hover:bg-amber-100 border-2 cursor-pointer"
                       style={{
                         color: "rgba(49, 87, 44, 1)",
                         borderColor: "rgba(49, 87, 44, 1)",
@@ -421,7 +421,7 @@ export default function Product() {
                       <>
                         <button
                           onClick={handlePrevImage}
-                          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 border-2"
+                          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 border-2 cursor-pointer"
                           style={{
                             backgroundColor: "rgba(64, 145, 108, 1)",
                             borderColor: "rgba(255, 255, 255, 0.3)",
@@ -432,7 +432,7 @@ export default function Product() {
                         </button>
                         <button
                           onClick={handleNextImage}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 border-2"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 border-2 cursor-pointer"
                           style={{
                             backgroundColor: "rgba(64, 145, 108, 1)",
                             borderColor: "rgba(255, 255, 255, 0.3)",
@@ -452,7 +452,7 @@ export default function Product() {
                         <button
                           key={i}
                           onClick={() => setSelectedImage(i)}
-                          className={`relative rounded-xl overflow-hidden transition-all duration-300 ${
+                          className={`relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer ${
                             selectedImage === i
                               ? "ring-3 ring-[#3F906B] ring-offset-4 scale-110 "
                               : "opacity-50 hover:opacity-100 hover:scale-105"
@@ -504,7 +504,7 @@ export default function Product() {
                   <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-2">
                     <div className="aspect-[295/210]">
                       <img
-                        src={p.images?.[0] || "/product1.png"}
+                        src={p.images?.[0]}
                         alt={p.name}
                         className="w-full h-full object-cover"
                       />
@@ -564,7 +564,7 @@ export default function Product() {
             </div>
             <button
               onClick={() => setShowToast(false)}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
             >
               <Plus size={20} className="rotate-45" />
             </button>
