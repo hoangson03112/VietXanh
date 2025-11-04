@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import HeroSection from "../components/HeroSection";
 import Footer from "../components/Footer";
 import { motion } from "framer-motion";
 import { ChevronsDown, Loader2 } from "lucide-react";
@@ -43,48 +44,10 @@ export default function Blogs() {
       <Header />
       <main>
         {/* Hero Section */}
-        <section
-          style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
-          className="pt-20 md:pt-24 text-white min-h-[60vh] md:min-h-[75vh] overflow-hidden relative"
-        >
-          <div className="container mx-auto max-w-9xl px-4 md:px-6 lg:px-3 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(60vh-5rem)] md:min-h-[calc(75vh-6rem)] relative py-8 md:py-0">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="col-span-1 lg:col-span-6 z-10 text-center lg:text-left"
-            >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 md:mb-6">
-                BÀI VIẾT
-              </h1>
-              <p className=" md:text-xl opacity-90 leading-relaxed mb-6 md:mb-10 px-4 sm:px-0">
-                Nơi chia sẻ kiến thức, mẹo sống xanh và xu hướng tiêu dùng bền
-                vững. Cùng Việt Xanh khám phá cách bảo vệ môi trường từ những
-                hành động nhỏ mỗi ngày.
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="hidden lg:block absolute bottom-0 right-0"
-              style={{ width: "75%", height: "calc(100% - 6rem)" }}
-            >
-              <div className="h-full flex items-end justify-end">
-                <img
-                  src="/team.png"
-                  alt="Team"
-                  className="h-auto object-bottom"
-                  style={{
-                    width: "140%",
-                    maxHeight: "100%",
-                    marginRight: "-25%",
-                  }}
-                />
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        <HeroSection
+          title="BÀI VIẾT"
+          description="Nơi chia sẻ kiến thức, mẹo sống xanh và xu hướng tiêu dùng bền vững. Cùng Việt Xanh khám phá cách bảo vệ môi trường từ những hành động nhỏ mỗi ngày."
+        />
 
         {/* Blog List Section */}
         <section

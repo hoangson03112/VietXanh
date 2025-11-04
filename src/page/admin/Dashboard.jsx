@@ -9,7 +9,7 @@ import AdminContact from "./Contact";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("messages");
+  const [activeTab, setActiveTab] = useState("products");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const menuItems = [

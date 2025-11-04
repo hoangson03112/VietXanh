@@ -46,15 +46,30 @@ export default function Footer() {
               sinh học từ tinh bột ngô, thân thiện với môi trường.
             </p>
             <div className="flex gap-3 mb-6">
-              <div className="w-10 h-10 rounded-full bg-[#5A9A7A] flex items-center justify-center cursor-pointer hover:bg-[#4B9D7E] transition-all hover:scale-110">
+              <a
+                href="https://www.facebook.com/profile.php?id=61582827898558"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#5A9A7A] flex items-center justify-center cursor-pointer hover:bg-[#4B9D7E] transition-all hover:scale-110"
+              >
                 <Facebook size={18} className="text-white" />
-              </div>
-              <div className="w-10 h-10 rounded-full bg-[#5A9A7A] flex items-center justify-center cursor-pointer hover:bg-[#4B9D7E] transition-all hover:scale-110">
+              </a>
+              <a
+                href="https://www.instagram.com/vietxanh662025/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#5A9A7A] flex items-center justify-center cursor-pointer hover:bg-[#4B9D7E] transition-all hover:scale-110"
+              >
                 <Instagram size={18} className="text-white" />
-              </div>
-              <div className="w-10 h-10 rounded-full bg-[#5A9A7A] flex items-center justify-center cursor-pointer hover:bg-[#4B9D7E] transition-all hover:scale-110">
+              </a>
+              <a
+                href="https://www.tiktok.com/@gaia_vietxanh?_t=ZS-90odelkYHQK&_r=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#5A9A7A] flex items-center justify-center cursor-pointer hover:bg-[#4B9D7E] transition-all hover:scale-110"
+              >
                 <TikTokIcon size={18} className="text-white" />
-              </div>
+              </a>
             </div>
             {/* Eco Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/30 backdrop-blur-sm rounded-full">
@@ -85,13 +100,13 @@ export default function Footer() {
                 style={{ color: "rgba(49, 87, 44, 0.85)" }}
               >
                 <li className="hover:text-[#4B9D7E] transition-colors cursor-pointer hover:translate-x-1 transition-transform">
-                  <Link to="/">Giới thiệu công ty</Link>
+                  <Link to="/about">Giới thiệu công ty</Link>
                 </li>
                 <li className="hover:text-[#4B9D7E] transition-colors cursor-pointer hover:translate-x-1 transition-transform">
-                  <Link to="/">Tầm nhìn & Sứ mệnh</Link>
+                  <Link to="/about">Tầm nhìn & Sứ mệnh</Link>
                 </li>
                 <li className="hover:text-[#4B9D7E] transition-colors cursor-pointer hover:translate-x-1 transition-transform">
-                  <Link to="/">Đội ngũ của chúng tôi</Link>
+                  <Link to="/about">Đội ngũ của chúng tôi</Link>
                 </li>
                 <li className="hover:text-[#4B9D7E] transition-colors cursor-pointer hover:translate-x-1 transition-transform">
                   <Link to="/">Chứng nhận & Giải thưởng</Link>

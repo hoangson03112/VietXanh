@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import HowToOrder from "../components/HowToOrder";
 import Footer from "../components/Footer";
+import HeroSection from "../components/HeroSection";
 import { ScrollReveal } from "../util/conmom";
 import { getFeaturedProducts } from "../services/productService";
 
@@ -43,53 +44,19 @@ export default function Home() {
 
       <main>
         {/* Hero Section */}
-        <section
-          style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
-          className="pt-20 md:pt-24 text-white min-h-[60vh] md:min-h-[75vh] overflow-hidden relative"
-        >
-          <div className="container mx-auto max-w-9xl px-4 md:px-6 lg:px-3 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(60vh-5rem)] md:min-h-[calc(75vh-6rem)] relative py-8 md:py-0">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="col-span-1 lg:col-span-6 z-10 text-center lg:text-left"
-            >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 md:mb-6">
-                MỘT SẢN PHẨM XANH
-                <br />
-                NGÀN TƯƠNG LAI SẠCH
-              </h1>
-              <p className="text-base md:text-xl opacity-90 leading-relaxed mb-6 md:mb-10 px-4 sm:px-0">
-                Việt Xanh là một trong những thương hiệu tiên phong trong việc
-                thiết kế và sản xuất các sản phẩm phân hủy sinh học từ tinh bột
-                ngô thân thiện với môi trường.
-              </p>
-              <button className="bg-black cursor-pointer text-white font-bold uppercase text-xs sm:text-sm px-6 sm:px-10 py-3 sm:py-4 rounded-full hover:bg-gray-900 transition-colors w-full sm:w-auto lg:w-[50%]">
-                XEM CÁC SẢN PHẨM
-              </button>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="hidden lg:block absolute bottom-0 right-0"
-              style={{ width: "75%", height: "calc(100% - 6rem)" }}
-            >
-              <div className="h-full flex items-end justify-end">
-                <img
-                  src="/team.png"
-                  alt="Team"
-                  className="h-auto object-bottom"
-                  style={{
-                    width: "140%",
-                    maxHeight: "100%",
-                    marginRight: "-25%",
-                  }}
-                />
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        <HeroSection
+          title={
+            <>
+              MỘT SẢN PHẨM XANH
+              <br />
+              NGÀN TƯƠNG LAI SẠCH
+            </>
+          }
+          description="Việt Xanh là một trong những thương hiệu tiên phong trong việc thiết kế và sản xuất các sản phẩm phân hủy sinh học từ tinh bột ngô thân thiện với môi trường."
+          showButton={true}
+          buttonText="XEM CÁC SẢN PHẨM"
+          onButtonClick={() => navigate("/products")}
+        />
         <div style={{ backgroundColor: "rgba(255, 244, 228, 1)" }}>
           {/* Products Section */}
           <section className="py-12 md:py-16 lg:py-24">
@@ -116,13 +83,17 @@ export default function Home() {
                   </div>
                 ) : featuredProducts.length === 0 ? (
                   <div className="col-span-full text-center py-8">
-                    <p className="text-gray-500">Chưa có sản phẩm nổi bật nào</p>
-                    <p className="text-sm text-gray-400 mt-2">Admin vui lòng đánh dấu sản phẩm nổi bật</p>
+                    <p className="text-gray-500">
+                      Chưa có sản phẩm nổi bật nào
+                    </p>
+                    <p className="text-sm text-gray-400 mt-2">
+                      Admin vui lòng đánh dấu sản phẩm nổi bật
+                    </p>
                   </div>
                 ) : (
                   featuredProducts.map((p, i) => (
                     <ScrollReveal key={p._id || i} delay={i * 0.1}>
-                      <div 
+                      <div
                         onClick={() => handleProductClick(p._id)}
                         className="rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group"
                       >
@@ -144,7 +115,11 @@ export default function Home() {
                             {p.description}
                           </p>
                           <button className="text-white font-bold text-lg flex items-center gap-2 hover:gap-4 transition-all duration-300 cursor-pointer">
-                            Xem thêm <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                            Xem thêm{" "}
+                            <ArrowRight
+                              size={18}
+                              className="group-hover:translate-x-1 transition-transform"
+                            />
                           </button>
                         </div>
                       </div>

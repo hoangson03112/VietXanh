@@ -120,11 +120,13 @@ export default function Cart() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate cart
     if (cartItems.length === 0) {
       setToastType("error");
-      setToastMessage("Giỏ hàng trống! Vui lòng thêm sản phẩm trước khi đặt hàng.");
+      setToastMessage(
+        "Giỏ hàng trống! Vui lòng thêm sản phẩm trước khi đặt hàng."
+      );
       setShowToast(true);
       setTimeout(() => setShowToast(false), 5000);
       return;
@@ -139,8 +141,9 @@ export default function Cart() {
         email: formData.email,
         phone: formData.phone,
         address: formData.address,
-        message: formData.message || `Đơn hàng với ${cartItems.length} sản phẩm`,
-        products: cartItems.map(item => ({
+        message:
+          formData.message || `Đơn hàng với ${cartItems.length} sản phẩm`,
+        products: cartItems.map((item) => ({
           productId: item._id,
           name: item.name,
           image: item.image,
@@ -153,9 +156,11 @@ export default function Cart() {
 
       if (response.success) {
         setToastType("success");
-        setToastMessage("Đơn hàng đã được gửi thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.");
+        setToastMessage(
+          "Đơn hàng đã được gửi thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất."
+        );
         setShowToast(true);
-        
+
         // Reset form and clear cart
         setFormData({
           name: "",
@@ -164,7 +169,7 @@ export default function Cart() {
           address: "",
           message: "",
         });
-        
+
         // Clear cart after successful order
         setCartItems([]);
         localStorage.removeItem("cart");
@@ -177,8 +182,8 @@ export default function Cart() {
       console.error("Error submitting order:", error);
       setToastType("error");
       setToastMessage(
-        error.response?.data?.message || 
-        "Có lỗi xảy ra khi gửi đơn hàng. Vui lòng thử lại!"
+        error.response?.data?.message ||
+          "Có lỗi xảy ra khi gửi đơn hàng. Vui lòng thử lại!"
       );
       setShowToast(true);
 
@@ -445,7 +450,7 @@ export default function Cart() {
                   className="bg-white rounded-2xl p-4 md:p-6 shadow-lg flex items-center gap-4 md:gap-6 group"
                 >
                   {/* Product Image - Clickable */}
-                  <div 
+                  <div
                     onClick={() => handleProductClick(item._id)}
                     className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden shrink-0 bg-gray-100 cursor-pointer transition-transform duration-300 hover:scale-105"
                   >
@@ -457,7 +462,7 @@ export default function Cart() {
                   </div>
 
                   {/* Product Info - Clickable */}
-                  <div 
+                  <div
                     onClick={() => handleProductClick(item._id)}
                     className="flex-1 cursor-pointer"
                   >
@@ -543,7 +548,6 @@ export default function Cart() {
               viewport={{ once: false }}
               className="text-center mb-12"
             >
-              \
               <p
                 className="text-base md:text-lg opacity-90"
                 style={{ color: "rgba(49, 87, 44, 0.8)" }}

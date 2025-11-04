@@ -26,7 +26,7 @@ export default function Product() {
   const [error, setError] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-console.log(relatedProducts);
+  console.log(relatedProducts);
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -39,7 +39,6 @@ console.log(relatedProducts);
           console.log("✅ Product data:", productResponse.data);
           console.log("🖼️ Images:", productResponse.data.images);
 
-          // Normalize image URLs - nếu là relative path thì bỏ "./"
           const normalizedProduct = {
             ...productResponse.data,
             images: productResponse.data.images?.map((img) =>
@@ -60,7 +59,7 @@ console.log(relatedProducts);
 
           const shuffled = otherProducts.sort(() => Math.random() - 0.5);
           console.log(shuffled);
-          
+
           setRelatedProducts(shuffled.slice(0, 4));
         }
       } catch (err) {
@@ -217,7 +216,7 @@ console.log(relatedProducts);
     <div className="min-h-screen font-sans">
       <Header />
       <main
-        className="pt-20 md:pt-24"
+        className="pt-20 md:pt-20"
         style={{ backgroundColor: "rgba(255, 244, 228, 1)" }}
       >
         <section

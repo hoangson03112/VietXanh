@@ -37,14 +37,16 @@ export default function Header() {
     <>
       <header
         className="fixed top-0 left-0 right-0 z-50 w-full shadow-md"
-        style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
+        style={{ backgroundColor: "#2d4628 " }}
+
+        // style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
       >
         <div className="container max-w-9xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           <Link to="/home" className="flex-shrink-0">
             <img
               src="/logo.png"
               alt="Việt Xanh"
-              className="h-14 md:h-16 lg:h-20 w-auto"
+              className="h-14 md:h-12 lg:h-13 w-auto"
             />
           </Link>
 

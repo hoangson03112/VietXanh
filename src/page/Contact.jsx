@@ -3,7 +3,15 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { motion } from "framer-motion";
-import { Facebook, Instagram, Mail, Phone, MapPin, Check, X } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Mail,
+  Phone,
+  MapPin,
+  Check,
+  X,
+} from "lucide-react";
 import { submitContactForm } from "../services/contactService";
 
 export default function Contact() {
@@ -42,9 +50,11 @@ export default function Contact() {
 
       if (response.success) {
         setToastType("success");
-        setToastMessage("Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.");
+        setToastMessage(
+          "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất."
+        );
         setShowToast(true);
-        
+
         // Reset form
         setFormData({
           name: "",
@@ -157,35 +167,41 @@ export default function Contact() {
               className="flex justify-center gap-6 mb-8"
             >
               <a
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61582827898558"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                 style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
               >
                 <Facebook className="text-white" size={24} />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                 style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
               >
                 <Instagram className="text-white" size={24} />
               </a>
               <a
-                href="#"
+                href="mailto:vietxanh662025@gmail.com"
                 className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                 style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
               >
                 <Mail className="text-white" size={24} />
               </a>
               <a
-                href="#"
+                href="tel:0399557326"
                 className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                 style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
               >
                 <Phone className="text-white" size={24} />
               </a>
               <a
-                href="#"
+                href="https://maps.app.goo.gl/s5kVHHiXrGAmLvMs8"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                 style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
               >
