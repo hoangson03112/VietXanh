@@ -59,7 +59,7 @@ export default function Home() {
         />
         <div style={{ backgroundColor: "rgba(255, 244, 228, 1)" }}>
           {/* Products Section */}
-          <section className="py-12 md:py-16 lg:py-24">
+          <section className=" lg:py-1">
             <div className="container mx-auto px-4 md:px-6 py-8 md:py-16 lg:py-24">
               <div className="mb-8 md:mb-12 lg:mb-16 text-center lg:text-left">
                 <h2
