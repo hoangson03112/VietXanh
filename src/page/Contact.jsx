@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { submitContactForm } from "../services/contactService";
+import HeroSection from "../components/HeroSection";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -87,49 +88,7 @@ export default function Contact() {
     <div className="min-h-screen font-sans">
       <Header />
       <main>
-        {/* Hero Section */}
-        <section
-          style={{ backgroundColor: "rgba(64, 145, 108, 1)" }}
-          className="pt-20 md:pt-24 text-white min-h-[60vh] md:min-h-[75vh] overflow-hidden relative"
-        >
-          <div className="container mx-auto max-w-9xl px-4 md:px-6 lg:px-3 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(60vh-5rem)] md:min-h-[calc(75vh-6rem)] relative py-8 md:py-0">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="col-span-1 lg:col-span-6 z-10 text-center lg:text-left"
-            >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 md:mb-6">
-                LIÊN HỆ
-              </h1>
-              <p className=" md:text-xl opacity-90 leading-relaxed mb-6 md:mb-10 px-4 sm:px-0">
-                Gửi thông tin của bạn cho Việt Xanh để được hỗ trợ nhanh chóng.
-                Chúng tôi luôn sẵn sàng lắng nghe và đồng hành cùng bạn trên
-                hành trình sống xanh.
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="hidden lg:block absolute bottom-0 right-0"
-              style={{ width: "75%", height: "calc(100% - 6rem)" }}
-            >
-              <div className="h-full flex items-end justify-end">
-                <img
-                  src="/team.png"
-                  alt="Team"
-                  className="h-auto object-bottom"
-                  style={{
-                    width: "140%",
-                    maxHeight: "100%",
-                    marginRight: "-25%",
-                  }}
-                />
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        <HeroSection />
 
         {/* Contact Form Section */}
         <section

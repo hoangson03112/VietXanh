@@ -3,8 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export default function HeroSection({
-  title,
-  description,
+
   showButton = false,
   buttonText = "",
   onButtonClick = null,
@@ -23,14 +22,18 @@ export default function HeroSection({
         <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden>
           <filter id="sharpen">
             {/* kernel: [0 -1 0; -1 5 -1; 0 -1 0] */}
-            <feConvolveMatrix order="3" kernelMatrix="0 -1 0 -1 5 -1 0 -1 0"/>
+            <feConvolveMatrix order="3" kernelMatrix="0 -1 0 -1 5 -1 0 -1 0" />
           </filter>
         </svg>
         <img
           src="/bg.png"
           alt="Team"
           className="w-full h-full object-contain object-center"
-          style={{ display: "block", objectFit: "contain", filter: 'url(#sharpen) contrast(1.04) saturate(1.05)' }}
+          style={{
+            display: "block",
+            objectFit: "contain",
+            filter: "url(#sharpen) contrast(1.04) saturate(1.05)",
+          }}
         />
         {showButton && buttonText && onButtonClick && (
           <button
